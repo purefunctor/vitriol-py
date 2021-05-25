@@ -27,7 +27,14 @@ jobs:
     - name: Install Poetry and Nox
       run: pip install poetry nox
 
+    - name: Cache Nox Environments
+      uses: actions/cache@v2
+      with:
+        path: |
+          .nox
+        key: ${{ runner.os }}-${{ hashFiles('poetry.lock') }}
+
     - name: Run Linting
       env:
         NOXSESSION: lint
-      run: nox
+      run: nox -r
