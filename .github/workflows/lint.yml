@@ -13,6 +13,8 @@ jobs:
   lint:
     name: Lint Code
     runs-on: ubuntu-latest
+    env:
+      PRE_COMMIT_HOME: ${{ github.workspace }}/.cache/pre-commit-cache
 
     steps:
     - name: Checkout Repository
@@ -30,9 +32,14 @@ jobs:
     - name: Cache Nox Environments
       uses: actions/cache@v2
       with:
-        path: |
-          .nox
-        key: ${{ runner.os }}-${{ hashFiles('poetry.lock') }}
+        path: .nox
+        key: nox-${{ runner.os }}-${{ hashFiles('pyproject.toml', 'poetry.lock') }}
+
+    - name: Cache Pre-Commit Environments
+      uses: actions/cache@v2
+      with:
+        path: ${{ env.PRE_COMMIT_HOME }}
+        key: pre-commit-${{ runner.os }}-${{ hashFiles('.pre-commit-config.yaml') }}
 
     - name: Run Linting
       env:
