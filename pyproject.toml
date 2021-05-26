@@ -8,12 +8,17 @@ authors = ["PureFunctor <purefunctor@gmail.com>"]
 python = "^3.9"
 
 [tool.poetry.dev-dependencies]
+coverage = {extras = ["toml"], version = "^5.5"}
 flake8 = "^3.9.2"
 flake8-annotations = "^2.6.2"
 flake8-import-order = "^0.18.1"
 mypy = "^0.812"
 pre-commit = "^2.13.0"
 pytest = "^5.2"
+
+[tool.coverage.run]
+source = ["vitriol"]
+omit = ["*tests*", "vitriol/__main__.py"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

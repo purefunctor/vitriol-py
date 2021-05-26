@@ -25,3 +25,13 @@ def lint(session):
     install_with_constraints(session, "pre-commit")
     session.run("pre-commit", "install")
     session.run("pre-commit", "run", "--all-files")
+
+
+@nox.session(python=["3.9"])
+def test(session):
+    env = {"COVERAGE_FILE": f".coverage.{session.python}"}
+
+    install_with_constraints(session, "pytest", "coverage[toml]")
+    session.install(".")
+    session.run("coverage", "run", "--branch", "-m", "pytest", "-vs", env=env)
+    session.run("coverage", "report", "-m", env=env)
