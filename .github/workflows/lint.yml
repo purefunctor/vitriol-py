@@ -59,4 +59,5 @@ jobs:
     - name: Run Linting
       env:
         NOXSESSION: lint
+        PIP_USER: 0
       run: nox -r
