@@ -26,6 +26,12 @@ jobs:
         python-version: 3.9
         architecture: x64
 
+    - name: Cache Pip Folder
+      uses: actions/cache@v2
+      with:
+        path: ~/.cache/pip
+        key: pip-${{ runner.os }}-${{ hashFiles('pyproject.toml', 'poetry.lock') }}
+
     - name: Install Poetry and Nox
       run: pip install poetry nox
 
